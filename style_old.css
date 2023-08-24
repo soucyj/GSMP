@@ -1,0 +1,17 @@
+.collapsible {
+  background-color: #d8db18;
+  color: #000000;
+  cursor: pointer;
+  padding: 10px;
+  border: none;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  width: 100%;
+}
+
+.content {
+  display: none;
+  padding: 10px;
+}

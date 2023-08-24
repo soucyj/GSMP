@@ -1,134 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Gradescope vers monPortail</title>
+    <title>Outils pour  travailler avec Gradescope à l'Université Laval</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-        <div style="max-width: 800px; margin: 0 auto;">
-        <h2>Téléversement du fichier provenant de Gradescope</h2>
-            <p>Sélectionnez le fichier obtenu de Gradescope. Il devrait se trouver dans votre dossier de téléchargement et se nommer <code>NomEvaluation_scores.xlsx</code>.</p>
-        <input type="file" id="xlsxFileInput" accept=".xlsx" />
-        <br>
-        <br>
-        <h2>Téléversement du fichier provenant de monPortail</h1>
-            <p>Sélectionnez le fichier obtenu de monPortail. Il devrait se trouver dans votre dossier de téléchargement et se nommer <code>Grille des résultats (...).xls</code>.</p>
-        <input type="file" id="xlsFileInput" accept=".xls" />
-        <br>
-        <br>
-        <p>En cliquant sur le bouton ci-dessous, le fichier à téléverser vers monPortail sera généré et téléchargé dans votre dossier de téléchargements par défaut. Il se nommera <code>versmonPortail.xls</code>.
-            Il vous suffira de le téléverser en vous rendant au même endroit que lors du téléchargement, mais en utilisant cette fois l'option <b>Téléverser la grille des résultats (Excel)</b>.</p>
-            <br>
-        <button onclick="processFiles()" style="background-color: forestgreen; color: white;">Générer le fichier à téléverser vers monPortail</button>
-            <br>
-            <br>
-            <div style="text-align: center;">
-                <img src="imagegs.png" alt="Deux ordinateurs qui s'échangent des nombres" width="600px">
-            </div>
-            <br>
-            <button class="collapsible" style="max-width: 800px; margin: 0 auto;">Cliquez ici pour obtenir des détails sur l'utilisation de ce programme</button>
-        <div class="content" style="max-width: 800px; margin: 0 auto;">
-            <h2>Télécharger les notes de Gradescope</h2>
-            <p>Pour télécharger le fichier Excel (extension xlsx) de Gradescope, il suffit de choisir l'évaluation concernée et de se rendre dans la section <b>Réviser les notes</b> (<i>Review Grades</i>). 
-                On doit ensuite cliquer sur le bouton <b>Télécharger les notes</b> (<i>Download Grades</i>) et choisir de télécharger pour Excel.</p>
-                <div style="text-align: center;">
-                    <img src="TelechargerGradescope.jpg" alt="Télécharger à partir de Gradescope" width="800px">
-                </div>
-            <br>
-            <h2>Télécharger le fichier des notes de l'évaluation de monPortail</h2>
-            <p>Pour télécharger le fichier Excel (extension xls) permettant la saisie des notes, il suffit de choisir l'évaluation concernée dans la liste des évaluations et de cliquer sur 
-                les options (trois points verticaux) puis de choisir l'item <b>Télécharger/Imprimer la grille des résultats (Excel).</b> 
-                On doit ensuite cliquer sur le bouton <b>Télécharger les notes</b>  (<i>Download Grades</i>) et choisir de télécharger pour Excel.</p>
-                <div style="text-align: center;">
-                    <img src="TelechargerMonPortail.jpg" alt="Télécharger à partir de monPortail" width="800px">
-                </div>
-            <br>
-            <br>
-            <p>Pour téléverser le fichier Excel généré par le programme (celui nommé <code>versmonPortail.xls</code>), il suffit de se rendre au même endroit où vous 
-                avez téléchargé le fichier Excel de monPortail, mais cette fois vous devez cliquer sur <b>Téléverser la grille des résultats (Excel).</b></p>
-                <div style="text-align: center;">
-                    <img src="TeleverserMonPortail.jpg" alt="Générer le fichier à téléverser vers monPortail" width="800px">
-                </div>
-            <br>
-        </div>
-        </div>
-        <br>
-        <div style="text-align: center;">
-            <p>Si vous avez des difficultés à utiliser le programme, écrivez à <a href="mailto:jsoucy@mat.ulaval.ca" target="_blank">jsoucy@mat.ulaval.ca</a> en prenant soin d'inclure vos deux fichiers (xls et xlsx) en pièces jointes.</p>
-        </div>
-        <script src="script.js"></script>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div style="max-width: 800px; margin: 0 auto;" align-items="center">
+        <button id="myButton" class="primary-button">Programme de transfert de notes</button> <button id="gabarit" class="primary-button">Gabarit LaTeX</button>
 
-        <script>
-            function processFiles() {
-                var xlsxFile = document.getElementById('xlsxFileInput').files[0];
-                var xlsFile = document.getElementById('xlsFileInput').files[0];
+    <script>
+        // Get a reference to the button element
+        const button = document.getElementById('myButton');
 
-                // Fonction qui part à la recherche de la string "searchString" dans une feuille Excel et 
-                // qui retourne le numéro de la colonne où elle apparaît. Retourne la valeur -1 si la string n'est pas trouvée.
-                function findColumnNumber(worksheet, searchString) {
-                    const range = XLSX.utils.decode_range(worksheet['!ref']);
-                    for (let col = range.s.c; col <= range.e.c; col++) {
-                        for (let row = range.s.r; row <= range.e.r; row++) {
-                            const cellAddress = XLSX.utils.encode_cell({ r: row, c: col });
-                            const cell = worksheet[cellAddress];
-                            if (cell && cell.v === searchString) {
-                                return col;
-                            }
-                        }
-                    }
-                    return -1;
-                }
-    
-                if (xlsxFile && xlsFile) {
-                    var xlsxReader = new FileReader();
-                    xlsxReader.onload = function(e) {
-                        var xlsxData = new Uint8Array(e.target.result);
-                        var workbook = XLSX.read(xlsxData, { type: 'array' });
+        // Add a click event listener to the button
+        button.addEventListener('click', () => {
+        // Set the link you want to open
+        const link = 'gradescope.html';
 
-                        var xlsReader = new FileReader();
-                        xlsReader.onload = function(e) {
-                            var xlsData = new Uint8Array(e.target.result);
-                            var xlsWorkbook = XLSX.read(xlsData, { type: 'array' });
-                            
-                            var xlsxSheet = workbook.Sheets[workbook.SheetNames[0]]; // Le classeur de Gradescope ne comporte qu'une feuille
-                            const ColonneTotalScore=findColumnNumber(xlsxSheet, 'Total Score');
-                            const ColonneSID=findColumnNumber(xlsxSheet, 'SID');
-                            
-                            var xlsxCells = XLSX.utils.sheet_to_json(xlsxSheet, { header: 1 });
-                            var newWorkbook = XLSX.utils.book_new();
-                            const sheetNames = xlsWorkbook.SheetNames;
-                            const ColonneIdentifiant=findColumnNumber(xlsWorkbook.Sheets[xlsWorkbook.SheetNames[0]], 'Identifiant');
-                            for (const sheetName of sheetNames) {
-                                var NouvelleFeuille = xlsWorkbook.Sheets[sheetName];
-                                var xlsCells = XLSX.utils.sheet_to_json(NouvelleFeuille, { header: 1 });
-                                for (var i = 0; i < xlsCells.length; i++) {
-                                    if (xlsCells[i][2]>0) {
-                                        for (var k = 0; k < xlsxCells.length; k++){
-                                            if (parseFloat(xlsxCells[k][ColonneSID])==xlsCells[i][ColonneIdentifiant]){
-                                                xlsCells[i][ColonneIdentifiant+4] = xlsxCells[k][ColonneTotalScore];
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-                                var newWorksheet = XLSX.utils.aoa_to_sheet(xlsCells);
-                                XLSX.utils.book_append_sheet(newWorkbook, newWorksheet, sheetName);
-                            }
-                            var newWorkbookData = XLSX.write(newWorkbook, { bookType: 'xls', type: 'array' });
-                            var blob = new Blob([newWorkbookData], { type: 'application/octet-stream' });
-                            saveAs(blob, 'versmonPortail.xls');
-                        };
-                        xlsReader.readAsArrayBuffer(xlsFile);
-                    };
-                    xlsxReader.readAsArrayBuffer(xlsxFile);
-                } else {
-                    alert('Veuillez choisir un fichier XLSX (Gradescope) et un fichier XLS (monPortail).');
-                }
-            }
-        </script>
-    </div>
+        // Open the link in the same window/tab
+        window.location.href = link;
+        });
+    </script>
+    <script>
+        // Get a reference to the button element
+        const button2 = document.getElementById('gabarit');
+
+        // Add a click event listener to the button
+        button2.addEventListener('click', () => {
+        // Set the link you want to open
+        const link2 = 'gabarit.html';
+
+        // Open the link in the same window/tab
+        window.location.href = link2;
+        });
+    </script>           
 </body>
 </html>
