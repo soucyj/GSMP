@@ -101,12 +101,10 @@
                                 var NouvelleFeuille = xlsWorkbook.Sheets[sheetName];
                                 var xlsCells = XLSX.utils.sheet_to_json(NouvelleFeuille, { header: 1 });
                                 for (var i = 0; i < xlsCells.length; i++) {
-                                    if (xlsCells[i][2]>0) {
-                                        for (var k = 0; k < xlsxCells.length; k++){
-                                            if (parseFloat(xlsxCells[k][ColonneSID])==xlsCells[i][ColonneIdentifiant]){
-                                                xlsCells[i][ColonneIdentifiant+4] = xlsxCells[k][ColonneTotalScore];
-                                                break;
-                                            }
+                                    for (var k = 0; k < xlsxCells.length; k++){
+                                        if (parseFloat(xlsxCells[k][ColonneSID])==xlsCells[i][ColonneIdentifiant]){
+                                            xlsCells[i][ColonneIdentifiant+4] = xlsxCells[k][ColonneTotalScore];
+                                            break;
                                         }
                                     }
                                 }
