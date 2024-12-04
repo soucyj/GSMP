@@ -13,8 +13,8 @@
     <br>
     <br>
     <div style="max-width: 800px; margin: 0 auto;" align-items="center">
-        <button id="myButton" class="primary-button">Programme de transfert de notes</button> <button id="gabarit" class="primary-button">Gabarit LaTeX</button>
-
+        <button id="myButton" class="primary-button">Programme de transfert de notes</button> <button id="gabarit" class="primary-button">Gabarit LaTeX</button><br><br>
+        <button id="Reprise" class="primary-button">Information pour les reprises d'examens de la FSG</button>
     <script>
         // Get a reference to the button element
         const button = document.getElementById('myButton');
@@ -40,6 +40,19 @@
         // Open the link in the same window/tab
         window.location.href = link2;
         });
-    </script>           
+    </script>
+    <script>
+        // Get a reference to the button element
+        const button3 = document.getElementById('Reprise');
+
+        // Add a click event listener to the button
+        button3.addEventListener('click', () => {
+        // Set the link you want to open
+        const link3 = 'Reprise.html';
+
+        // Open the link in the same window/tab
+        window.location.href = link3;
+        });
+    </script>          
 </body>
 </html>
