@@ -11,6 +11,9 @@
 <body>
     <h1>Examen de reprise</h1>
     <form id="exam-summary-form">
+        <label for="exam-name">Nom de l'évaluation :</label>
+        <input type="text" id="exam-name" name="exam-name" size="50" placeholder="Ex: Examen 1" required><br><br>
+
         <label for="course-code">Sigle du cours :</label>
         <input type="text" id="course-code" name="course-code" placeholder="Ex: MAT-2904" required><br><br>
 
@@ -20,7 +23,7 @@
         <label for="responsible-unit">Unité d'enseignement responsable :</label>
         <select id="responsible-unit" name="responsible-unit" required>
             <option value="">Choisissez...</option>
-            <option value="Département de mathématiques et statistique">Département de mathématiques et statistique</option>
+            <option value="Département de mathématiques et de statistique">Département de mathématiques et de statistique</option>
             <option value="École d'actuariat">École d'actuariat</option>
         </select><br><br>
 
@@ -138,6 +141,7 @@
             // Récupération des informations saisies dans le formulaire
             const courseCode = document.getElementById('course-code').value;
             const courseName = document.getElementById('course-name').value;
+            const examName = document.getElementById('exam-name').value;
             const responsibleUnit = document.getElementById('responsible-unit').value;
             const responsibleName = document.getElementById('responsible-name').value;
             const phoneNumber = document.getElementById('phone-number').value;
@@ -166,7 +170,14 @@
                 // Nom de l'étudiant
                 doc.setFontSize(28);
                 doc.setFont("helvetica", "normal");
-                doc.text(name, 105, 50, { align: "center" });
+                doc.text(name, 105, 30, { align: "center" });
+
+                // Nom de l'examen
+                doc.setFontSize(12);
+                doc.setFont("helvetica", "bold");
+                doc.text("Nom de l'évaluation :", 10, 50);
+                doc.setFont("courier", "normal"); // Police monospace
+                doc.text(examName, 65, 50); // La valeur saisie
     
                 // Informations de l'examen
                 doc.setFontSize(12);
